@@ -43,6 +43,7 @@ window.onload = () => {
  */
 function comecarEtapa() {
   let etapa = etapas[etapaAtual]
+  console.info(etapas[10]);
   console.log('Etapa atual: ' + etapa['titulo'])
 
   numeroDigitado = ''
@@ -228,7 +229,9 @@ function confirmar() {
       <div class="fim">FIM</div>
     `
   }
-
   (new Audio('audio/se3.mp3')).play()
+  ajax(`https://api-sistema-votacao.herokuapp.com/votar/${numeroDigitado}`, 'POST', (respose) => {
+    console.log(respose);
+  })
   comecarEtapa()
 }
