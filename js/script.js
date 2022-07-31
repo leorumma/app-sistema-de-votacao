@@ -18,7 +18,7 @@ var etapas = null
 var numeroDigitado = ''
 var votoEmBranco = false
 
-ajax('etapas.json', 'GET', (response) => {
+ajax('https://api-sistema-votacao.herokuapp.com/votacao', 'GET', (response) => {
   etapas = JSON.parse(response)
   console.log(etapas)
 
@@ -104,7 +104,7 @@ function atualizarInterface() {
     rCandidato.style.display = 'block'
     rCandidato.querySelector('.imagem img').src = `img/${candidato['foto']}`
     rCandidato.querySelector('.cargo p').innerHTML = etapa['titulo']
-    
+
     if (vice) {
       rNomeVice.style.display = 'block'
       rNomeVice.querySelector('span').innerHTML = vice['nome']
@@ -158,7 +158,7 @@ function clicar(value) {
  */
 function branco() {
   console.log('branco')
-  
+
   // Verifica se há algum número digitado,
   // se sim, não vota
   if (! numeroDigitado) {
