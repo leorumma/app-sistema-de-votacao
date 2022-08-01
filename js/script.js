@@ -36,6 +36,11 @@ window.onload = () => {
   document.querySelector('.teclado--botao.branco').onclick = () => branco()
   document.querySelector('.teclado--botao.laranja').onclick = () => corrigir()
   document.querySelector('.teclado--botao.verde').onclick = () => confirmar()
+  document.getElementById('novo-voto').onclick = () => iniciarVotacao();
+}
+
+function iniciarVotacao() {
+  document.location.reload(true);
 }
 
 /**
