@@ -15,12 +15,21 @@
     <title>Resultado Votação</title>
 </head>
 <body>
-    <h1>Resultado para Vereadores</h1>
+    <h1 class="d-flex flex-row justify-content-center py-3">Resultado das Eleições</h1>
+    <br>
+    <h2>Vereador</h2>
     <div id="table-verador">
     </div>
     <br>
-    <h1>Resultado para Prefeitos</h1>
+    <h2>Prefeito</h2>
     <div id="table-prefeito"></div>
+    <div>
+        <div id="reiniciar-votacao" class="d-flex flex-row justify-content-center py-3">
+            <a class="btn btn-primary" role="button">
+                Reiniciar Eleição
+            </a>
+        </div>
+    </div>
 </body>
 </html>
 <script>
@@ -47,23 +56,23 @@
     <table class="table table-striped" id = "myTable">
             <thead>
             <tr>
-                <th scope="col">Nome</th>
+                <th scope="col">#</th>
                 <th scope="col">Numero</th>
+                <th scope="col">Nome Vereador</th>
                 <th scope="col">Partido</th>
-                <th scope="col">Nome Vice</th>
                 <th scope="col">Votos</th>
             </tr>
             </thead>
             <tbody>
       `;
         //create//append rows
-        vereadores.forEach(vereador => {
+        vereadores.forEach((vereador, index) => {
             tableVerador = tableVerador + `
     <tr>
-      <td>${vereador.nome}</td>
+      <th scope="row">${index + 1}</th>
       <td>${vereador.numero}</td>
+      <td>${vereador.nome}</td>
       <td>${vereador.partido}</td>
-      <td>${vereador.nome_vice}</td>
       <td>${vereador.votos}</td>
     </tr>`
         });
@@ -85,23 +94,27 @@
     <table class="table table-striped" id = "myTable">
             <thead>
             <tr>
-                <th scope="col">Nome</th>
+                <th scope="col">#</th>
                 <th scope="col">Numero</th>
+                <th scope="col">Nome Prefeito</th>
                 <th scope="col">Partido</th>
-                <th scope="col">Nome Vice</th>
+                <th scope="col">Nome Vice-Prefeito</th>
+                <th scope="col">Partido Vice-Prefeito</th>
                 <th scope="col">Votos</th>
             </tr>
             </thead>
             <tbody>
       `;
         //create//append rows
-        prefeitos.forEach(prefeito => {
+        prefeitos.forEach((prefeito, index) => {
             tablePrefeito = tablePrefeito + `
     <tr>
-      <td>${prefeito.nome}</td>
+      <th scope="row">${index + 1}</th>
       <td>${prefeito.numero}</td>
+      <td>${prefeito.nome}</td>
       <td>${prefeito.partido}</td>
       <td>${prefeito.nome_vice}</td>
+      <td>${prefeito.partido_vice}</td>
       <td>${prefeito.votos}</td>
     </tr>`
         });
@@ -111,6 +124,12 @@
         tableData.innerHTML = tablePrefeito;
     }
 
+    function reiniciarVotacao() {
+        ajax(`https://api-sistema-votacao.herokuapp.com/reiniciar-votacao`, 'GET', (response) => {
+            document.location.reload(true);
+            console.log(response);
+        })
+    }
 
     function ajax(url, method, callback) {
         let request = new XMLHttpRequest();
@@ -122,6 +141,10 @@
             }
         };
         request.send(null);
+    }
+
+    window.onload = () => {
+        document.getElementById('reiniciar-votacao').onclick = () => reiniciarVotacao();
     }
 
 </script>
